@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+.pages {
+  list-style: none;
+  padding: 5px 0px;
+}
+
+#footer {
+  text-align: center;
+}

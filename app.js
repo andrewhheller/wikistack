@@ -1,25 +1,45 @@
+// express
 const express = require('express');
 const app = express();
 
+// data models
+const { db } = require('./models');
+
+// middleware
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
-// const routes = require('./routes/posts.js');
+// router paths
+const wikisRoute = require('./routes/wiki');
+const userRoute = require('./routes/user')
 
-// app.use('/posts', routes);
+// method override
+app.use(methodOverride('_method'));
 
+// logging middleware
 app.use(morgan('dev'));
 
+// static path middleware
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/:id', (res, req, next) => {
-  res.send('hello from posts');
-})
+// body parser middleware
+app.use(bodyParser.urlencoded());
 
+// router sub-paths
+app.use('/wiki', wikisRoute);
+app.use('/users', userRoute);
+
+// main route redirection
 app.get('/', (req, res, next) => {
-  res.send('hello world');
+  res.redirect('/wiki')
 });
+
+
+
+
+
 
 
 
